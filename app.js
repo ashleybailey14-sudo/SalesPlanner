@@ -169,15 +169,17 @@ If you are not certain of exact branch locations, provide your best estimate of 
 
 ## SECTION 5: Top Realtors to Connect With
 
-List the **top 8 real estate agents / realtors** in or near ${city}, ${state} that the loan officer should prioritize building relationships with. Focus on high-producing agents who are active in the local market. For each, provide:
-- **Name**
-- **Brokerage / Company**
-- **Phone number** (if known)
-- **Email address** (if known)
-- **Website or profile URL** (if known)
-- **Why they're a good contact** (e.g., top producer, specializes in first-time buyers, active in new construction, etc.)
+IMPORTANT: Use Google Search to find **real, actual, currently active** real estate agents in ${city}, ${state}. Do NOT use fictional names or generic archetypes. Search for top-producing realtors in this specific city using sources like Zillow, Realtor.com, local real estate association directories, or brokerage websites.
 
-Present this as a table for easy reference.
+List **8 real, named real estate agents / realtors** in or near ${city}, ${state} that the loan officer should prioritize building relationships with. For each, provide:
+- **Name** (must be a real person)
+- **Brokerage / Company**
+- **Phone number** (if found)
+- **Email address** (if found)
+- **Website or profile URL** (if found)
+- **Why they're a good contact** (e.g., top producer, high transaction volume, specializes in first-time buyers, active in new construction, etc.)
+
+Present this as a table for easy reference. If you cannot find 8 agents, list as many real agents as you can find — never fill in gaps with made-up names.
 
 ---
 
@@ -227,7 +229,7 @@ async function callGemini(city, state) {
             temperature: 0.85,
             topP: 0.95,
             topK: 40,
-            maxOutputTokens: 12000
+            maxOutputTokens: 65536
         }
     };
 

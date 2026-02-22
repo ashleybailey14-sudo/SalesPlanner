@@ -1,10 +1,26 @@
 // ============================================================
 // Columbia Bank — Loan Officer Sales Planner
-// Gemini API Integration
+// Gemini API Integration (API key stored in localStorage)
 // ============================================================
 
-const GEMINI_API_KEY = 'AIzaSyACNhFkPgk0m6QoepI8XzHi2HaK0BkAdcw';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+const STORAGE_KEY = 'gemini_api_key';
+
+// ---- API Key Management ----
+function getApiKey() {
+    return localStorage.getItem(STORAGE_KEY) || '';
+}
+
+function saveApiKey(key) {
+    localStorage.setItem(STORAGE_KEY, key.trim());
+}
+
+function clearApiKey() {
+    localStorage.removeItem(STORAGE_KEY);
+}
+
+function getApiUrl(apiKey) {
+    return `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+}
 
 // ---- DOM Elements ----
 const salesForm = document.getElementById('salesForm');
@@ -21,6 +37,50 @@ const errorMessage = document.getElementById('errorMessage');
 const retryBtn = document.getElementById('retryBtn');
 const printBtn = document.getElementById('printBtn');
 const copyBtn = document.getElementById('copyBtn');
+
+// Modal elements
+const apiKeyModal = document.getElementById('apiKeyModal');
+const apiKeyForm = document.getElementById('apiKeyForm');
+const apiKeyInput = document.getElementById('apiKeyInput');
+const changeKeyBtn = document.getElementById('changeKeyBtn');
+
+// ---- Modal Logic ----
+function showModal() {
+    apiKeyInput.value = '';
+    apiKeyModal.style.display = 'flex';
+    setTimeout(() => apiKeyInput.focus(), 100);
+}
+
+function hideModal() {
+    apiKeyModal.style.display = 'none';
+}
+
+function updateKeyButtonVisibility() {
+    changeKeyBtn.style.display = getApiKey() ? 'inline-flex' : 'none';
+}
+
+// On page load: show modal if no key saved
+document.addEventListener('DOMContentLoaded', () => {
+    if (!getApiKey()) {
+        showModal();
+    }
+    updateKeyButtonVisibility();
+});
+
+// Save key from modal form
+apiKeyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const key = apiKeyInput.value.trim();
+    if (!key) return;
+    saveApiKey(key);
+    hideModal();
+    updateKeyButtonVisibility();
+});
+
+// Change key button in header
+changeKeyBtn.addEventListener('click', () => {
+    showModal();
+});
 
 // ---- Build the Prompt ----
 function buildPrompt(city, state) {
@@ -130,6 +190,12 @@ Make the plan practical, motivating, and ready to execute. Use specific numbers 
 
 // ---- Call Gemini API ----
 async function callGemini(city, state) {
+    const apiKey = getApiKey();
+    if (!apiKey) {
+        showModal();
+        throw new Error('Please enter your Gemini API key to continue.');
+    }
+
     const prompt = buildPrompt(city, state);
 
     const requestBody = {
@@ -148,7 +214,7 @@ async function callGemini(city, state) {
         }
     };
 
-    const response = await fetch(GEMINI_API_URL, {
+    const response = await fetch(getApiUrl(apiKey), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody)
@@ -156,9 +222,17 @@ async function callGemini(city, state) {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-            errorData?.error?.message || `API returned status ${response.status}`
-        );
+        const msg = errorData?.error?.message || `API returned status ${response.status}`;
+
+        // If the key is invalid, clear it and show the modal
+        if (response.status === 400 || response.status === 401 || response.status === 403) {
+            clearApiKey();
+            updateKeyButtonVisibility();
+            showModal();
+            throw new Error('Invalid API key. Please enter a valid Gemini API key.');
+        }
+
+        throw new Error(msg);
     }
 
     const data = await response.json();
@@ -176,9 +250,6 @@ async function callGemini(city, state) {
 function renderMarkdown(md) {
     let html = md;
 
-    // Escape HTML entities (but preserve markdown)
-    // We'll do this selectively to avoid breaking markdown syntax
-
     // Horizontal rules
     html = html.replace(/^---+$/gm, '<hr>');
 
@@ -192,7 +263,7 @@ function renderMarkdown(md) {
         return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
     });
 
-    // Headers (process in order: h3, h2, h1 to avoid conflicts)
+    // Headers
     html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
@@ -210,7 +281,7 @@ function renderMarkdown(md) {
     // Ordered lists
     html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
 
-    // Wrap consecutive <li> in <ul> or <ol>
+    // Wrap consecutive <li> in <ul>
     html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, (match) => {
         return `<ul>${match}</ul>`;
     });
@@ -218,7 +289,7 @@ function renderMarkdown(md) {
     // Blockquotes
     html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
 
-    // Paragraphs: wrap lines that aren't already HTML tags
+    // Paragraphs
     html = html.replace(/^(?!<[a-z/])((?!^\s*$).+)$/gm, (match) => {
         return `<p>${match}</p>`;
     });
@@ -266,6 +337,12 @@ salesForm.addEventListener('submit', async (e) => {
     const state = stateSelect.value;
 
     if (!city || !state) return;
+
+    // Check for API key before proceeding
+    if (!getApiKey()) {
+        showModal();
+        return;
+    }
 
     hideAll();
     setLoading(true);

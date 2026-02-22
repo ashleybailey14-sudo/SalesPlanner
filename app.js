@@ -3,7 +3,7 @@
 // Gemini API Integration
 // ============================================================
 
-const GEMINI_API_KEY = 'AIzaSyBgHay6GKA4u3vAYtQJ5pgrIoXNmWpWAMs';
+const GEMINI_API_KEY = 'AIzaSyACNhFkPgk0m6QoepI8XzHi2HaK0BkAdcw';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // ---- DOM Elements ----

@@ -220,6 +220,9 @@ async function callGemini(city, state) {
                 ]
             }
         ],
+        tools: [
+            { google_search: {} }
+        ],
         generationConfig: {
             temperature: 0.85,
             topP: 0.95,

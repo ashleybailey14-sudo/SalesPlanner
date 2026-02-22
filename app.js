@@ -86,6 +86,8 @@ changeKeyBtn.addEventListener('click', () => {
 function buildPrompt(city, state) {
     return `You are an expert home loan sales strategist and real estate market analyst. A home loan officer at Columbia Bank wants to grow their business in **${city}, ${state}**. Generate a comprehensive, actionable **3-month sales plan** broken into the sections below. Use real-world knowledge of this area. Be specific — use actual neighborhood names, demographic patterns, and local institutions when possible.
 
+IMPORTANT COMPLIANCE RULE: Do NOT suggest or recommend creating online videos, YouTube content, TikTok, Instagram Reels, video testimonials, video series, or any form of video content. This is a bank compliance requirement. All suggested activities must be non-video. Do not mention video in any part of the plan.
+
 Format the entire response in clean Markdown with headers, bullet points, numbered lists, and tables where appropriate.
 
 ---

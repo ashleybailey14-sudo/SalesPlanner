@@ -242,8 +242,17 @@ async function callGemini(city, state) {
 
     const data = await response.json();
 
-    // Extract text from response
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    // Extract text from all parts (search grounding can split response across multiple parts)
+    const parts = data?.candidates?.[0]?.content?.parts;
+    if (!parts || parts.length === 0) {
+        throw new Error('No content received from Gemini. Please try again.');
+    }
+
+    const text = parts
+        .filter(part => part.text)
+        .map(part => part.text)
+        .join('\n\n');
+
     if (!text) {
         throw new Error('No content received from Gemini. Please try again.');
     }

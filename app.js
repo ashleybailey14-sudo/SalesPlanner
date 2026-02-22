@@ -167,7 +167,21 @@ If you are not certain of exact branch locations, provide your best estimate of 
 
 ---
 
-## SECTION 5: Local Homeownership Resources & Non-Profits
+## SECTION 5: Top Realtors to Connect With
+
+List the **top 8 real estate agents / realtors** in or near ${city}, ${state} that the loan officer should prioritize building relationships with. Focus on high-producing agents who are active in the local market. For each, provide:
+- **Name**
+- **Brokerage / Company**
+- **Phone number** (if known)
+- **Email address** (if known)
+- **Website or profile URL** (if known)
+- **Why they're a good contact** (e.g., top producer, specializes in first-time buyers, active in new construction, etc.)
+
+Present this as a table for easy reference.
+
+---
+
+## SECTION 6: Local Homeownership Resources & Non-Profits
 
 List **3 to 5 non-profit organizations or community organizations** near ${city}, ${state} that support homeownership, housing assistance, or financial literacy. For each, provide:
 - Organization name
@@ -177,7 +191,7 @@ List **3 to 5 non-profit organizations or community organizations** near ${city}
 
 ---
 
-## SECTION 6: Executive Summary & Quick-Start Checklist
+## SECTION 7: Executive Summary & Quick-Start Checklist
 
 End with:
 1. A brief **executive summary** (3–4 sentences) of the overall strategy

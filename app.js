@@ -4,7 +4,7 @@
 // ============================================================
 
 const GEMINI_API_KEY = 'AIzaSyBgHay6GKA4u3vAYtQJ5pgrIoXNmWpWAMs';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // ---- DOM Elements ----
 const salesForm = document.getElementById('salesForm');

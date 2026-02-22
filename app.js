@@ -167,23 +167,7 @@ If you are not certain of exact branch locations, provide your best estimate of 
 
 ---
 
-## SECTION 5: Top Realtors to Connect With
-
-IMPORTANT: Use Google Search to find **real, actual, currently active** real estate agents in ${city}, ${state}. Do NOT use fictional names or generic archetypes. Search for top-producing realtors in this specific city using sources like Zillow, Realtor.com, local real estate association directories, or brokerage websites.
-
-List **8 real, named real estate agents / realtors** in or near ${city}, ${state} that the loan officer should prioritize building relationships with. For each, provide:
-- **Name** (must be a real person)
-- **Brokerage / Company**
-- **Phone number** (if found)
-- **Email address** (if found)
-- **Website or profile URL** (if found)
-- **Why they're a good contact** (e.g., top producer, high transaction volume, specializes in first-time buyers, active in new construction, etc.)
-
-Present this as a table for easy reference. If you cannot find 8 agents, list as many real agents as you can find — never fill in gaps with made-up names.
-
----
-
-## SECTION 6: Local Homeownership Resources & Non-Profits
+## SECTION 5: Local Homeownership Resources & Non-Profits
 
 List **3 to 5 non-profit organizations or community organizations** near ${city}, ${state} that support homeownership, housing assistance, or financial literacy. For each, provide:
 - Organization name
@@ -193,7 +177,7 @@ List **3 to 5 non-profit organizations or community organizations** near ${city}
 
 ---
 
-## SECTION 7: Executive Summary & Quick-Start Checklist
+## SECTION 6: Executive Summary & Quick-Start Checklist
 
 End with:
 1. A brief **executive summary** (3–4 sentences) of the overall strategy
